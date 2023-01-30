@@ -26,6 +26,8 @@ pipeline {
             steps {
                 sh """
                 docker image build -t spring-image:1.0 .
+                docker tag spring-image:1.0 jfrogproject123.jfrog.io/pipeline-docker/spring-image:1.0
+                docker push jfrogproject123.jfrog.io/pipeline-docker/spring-image:1.0
                 """
         }
     }
