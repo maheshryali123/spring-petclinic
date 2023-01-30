@@ -22,5 +22,11 @@ pipeline {
                 }
             }
         }
+        stage('build_docker') {
+            steps {
+                sh """
+                docker image build -t spring-image:1.0 .
+                """
+        }
     }
 }
