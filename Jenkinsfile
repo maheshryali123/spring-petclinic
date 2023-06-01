@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'SPRING' }
+    agent { label 'DEV' }
     triggers { pollSCM('* * * * *') }
     stages {
         stage('git') {
@@ -15,7 +15,19 @@ pipeline {
                 """
             }
         }
-        stage('sonar') {
+        stage('stashthejarfile') {
+            steps{
+                stash name: 'spc-jar',
+                      excludes: '**/target/spring-petclinic-3.0.0-SNAPSHOT.jar'
+            }
+        }
+        stage('unstashthejarfile') {
+            agent { label 'K8S'}
+            steps {
+                unstash name: 'spc-jar'
+            }
+        }
+        /*stage('sonar') {
             steps {
                 withSonarQubeEnv('sonarscan') {
                     sh 'mvn clean package sonar:sonar'
@@ -30,6 +42,6 @@ pipeline {
                 docker push jfrogproject123.jfrog.io/pipeline-docker/spring-image:1.0
                 """
         }
-    }
+    }*/
 }
 }
