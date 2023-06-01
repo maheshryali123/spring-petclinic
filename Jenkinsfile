@@ -18,7 +18,7 @@ pipeline {
         stage('stashthejarfile') {
             steps{
                 stash name: 'spc-jar',
-                      excludes: '**/target/spring-petclinic-3.0.0-SNAPSHOT.jar'
+                      includes: '**/target/spring-petclinic-3.0.0-SNAPSHOT.jar'
             }
         }
         stage('unstashthejarfile') {
